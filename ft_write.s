@@ -17,7 +17,6 @@ _ft_write:
 	xor		rax, rax
 	mov		rax, 0x2000004
 	syscall
-	; cmp		rax, 0
 	jb		_return
 	ret
 _return:

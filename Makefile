@@ -6,7 +6,7 @@
 #    By: qcraghas <qcraghas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/08 15:07:00 by qcraghas          #+#    #+#              #
-#    Updated: 2020/10/10 17:27:59 by qcraghas         ###   ########.fr        #
+#    Updated: 2020/10/11 18:37:40 by qcraghas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ $(SRCO): %.o:%.s
 
 clean:
 	/bin/rm -rf *.o
+	/bin/rm -rf test
 
 fclean: clean
 	/bin/rm -rf $(NAME)

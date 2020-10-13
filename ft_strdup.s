@@ -17,7 +17,6 @@
 
 	section	.text
 _ft_strdup:
-	xor		rax, rax
 	push	rdi
 	call	_ft_strlen
 	call	_malloc

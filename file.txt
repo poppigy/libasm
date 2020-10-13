@@ -1,0 +1,7 @@
+ft_read test
+this string is read in ft_read and read
+>>>correct file descriptor<<<
+
+WRITE TEST STARTS BELOW:
+LIBASM ft_write
+STANDART write

@@ -6,12 +6,14 @@
 /*   By: qcraghas <qcraghas@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 19:26:30 by qcraghas          #+#    #+#             */
-/*   Updated: 2020/10/10 18:16:24 by qcraghas         ###   ########.fr       */
+/*   Updated: 2020/10/11 18:32:00 by qcraghas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libasm.h"
+#include <fcntl.h>
 #include <errno.h>
+#include <stdlib.h>
 #define _DEF_	"\x1B[0m"
 #define _RED_	"\x1B[31m"
 #define _GRN_	"\x1B[32m"
@@ -23,6 +25,7 @@
 
 int	main()
 {
+	//FT_STRLEN
 	printf("%s>>>>>FT_STRLEN<<<<<%s\n", _RED_, _DEF_);
 	printf("%s---empty string----%s\n", _BLU_, _DEF_);
 	printf("%sLIBASM   %s%zu\n", _GRN_, _DEF_, ft_strlen(""));
@@ -38,81 +41,137 @@ int	main()
 	char *dst_reg = strdup("destination");
 	char *src_reg = strdup("source");
 
+	//FT_STRCPY
 	printf("%s>>>>>FT_STRCPY<<<<<%s\n", _RED_, _DEF_);
-	
-	printf("%s---empty string 1---%s\n", _BLU_, _DEF_);
+	printf("%s----empty dest----%s\n", _BLU_, _DEF_);
 	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, ft_strcpy(dst_empty, src_reg));
-	dst_empty = strdup("");
+	dst_empty = strdup(""); //reset
 	printf("%sSTANDART %s%s\n\n", _YEL_, _DEF_, strcpy(dst_empty, src_reg));
-	
-	printf("%s---empty string 2---%s\n", _BLU_, _DEF_);
+	printf("%s---empty source---%s\n", _BLU_, _DEF_);
 	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, ft_strcpy(dst_reg, src_empty));
-	dst_reg = strdup("destination");
+	dst_reg = strdup("destination"); //reset
 	printf("%sSTANDART %s%s\n\n", _YEL_, _DEF_, strcpy(dst_reg, src_empty));
-	
-	dst_empty = strdup("");
+	dst_empty = strdup(""); //reset
 	dst_reg = strdup("destination");
-	
-	printf("%s---empty strings---%s\n", _BLU_, _DEF_);
-	
+	printf("%s----both empty----%s\n", _BLU_, _DEF_);
 	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, ft_strcpy(dst_empty, src_empty));
-	dst_empty = strdup("");
+	dst_empty = strdup(""); //reset
 	printf("%sSTANDART %s%s\n\n", _YEL_, _DEF_, strcpy(dst_empty, src_empty));
-
-	printf("%s----strings----%s\n", _BLU_, _DEF_);
+	printf("%s----reg strings----%s\n", _BLU_, _DEF_);
 	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, ft_strcpy(dst_reg, src_reg));
-	dst_reg = strdup("destination");
+	dst_reg = strdup("destination"); //reset
 	printf("%sSTANDART %s%s\n\n", _YEL_, _DEF_, strcpy(dst_reg, src_reg));
-
-	dst_empty = strdup("");
+	dst_reg = strdup("This is a destination string I want to use");
+	src_reg = strdup("This is a source string I want to copy");
+	printf("%s----long strings----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, ft_strcpy(dst_reg, src_reg));
+	dst_reg = strdup("This is a destination string I want to use"); //reset
+	printf("%sSTANDART %s%s\n\n", _YEL_, _DEF_, strcpy(dst_reg, src_reg));
 	dst_reg = strdup("destination");
 
+	//FT_STRCMP
+	printf("%s>>>>>FT_STRCMP>>>>>%s\n", _RED_, _DEF_);
+	char *same1 = "similar"; char *same2 = "similar";
+	char *empty1 = ""; char *empty2 = "";
+	char *reg1 = "Regular string first arg"; char *reg2 = "Regular string second arg";
+	char *long1 = "Long string STRCMP check. This string could be longer";
+	char *long2 = "Long string STRCMP check. This string could be shorter";
+	printf("%s----first empty----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(empty1, reg2));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(empty1, reg2));
+	printf("%s----second empty----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(reg1, empty2));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(reg1, empty2));
+	printf("%s-----both empty-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(empty1, empty2));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(empty1, empty2));
+	printf("%s-----equal-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(same1, same2));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(same1, same2));
+	printf("%s-----regular-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(reg1, reg2));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(reg1, reg2));
+	printf("%s-----reg reverse-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(reg2, reg1));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(reg2, reg1));
+	printf("%s-----long-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(long1, long2));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(long1, long2));
+	printf("%s-----long reverse-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%d\n", _GRN_, _DEF_, ft_strcmp(long2, long1));
+	printf("%sSTANDART %s%d\n\n", _YEL_, _DEF_, strcmp(long2, long1));
 
+	//FT_WRITE
+	printf("%s>>>>>FT_WRITE<<<<<%s\n", _RED_, _DEF_);
+
+	char *ft_w = "LIBASM stdout ft_write\n";
+	char *w = "STANDART stdout write\n\n";
+
+	printf("%s----STDOUT----%s\n", _BLU_, _DEF_);
+	ft_write(1, ft_w, ft_strlen(ft_w));
+	write(1, w, ft_strlen(w));
 
 	
-	// s = ft_strcpy(s, "hell");
-	// printf("%s\n", s);
-	// s = strcpy(s, "hell");
-	// printf("%s\n", s);
-	printf("%s>>>>>FT_STRCMP>>>>>%s\n", _RED_, _DEF_);
-	char *s1 = "aaaa"; char *s2 = "aaaa";
-	printf("ftstrcmp %d\n", ft_strcmp(s1, s2));
-	printf("__strcmp %d\n", strcmp(s1, s2));
-	s1 = ""; s2 = "a";
-	printf("ftstrcmp %d\n", ft_strcmp(s1, s2));
-	printf("__strcmp %d\n", strcmp(s1, s2));
-	s1 = "aaaa"; s2 = "aaa";
-	printf("ftstrcmp %d\n", ft_strcmp(s1, s2));
-	printf("__strcmp %d\n", strcmp(s1, s2));
-	// s1 = NULL; s2 = "aaa";
-	// printf("strcmp %d\n", strcmp(s2, s1));
-	// printf("ftstrcmp %d\n", ft_strcmp(s1, s2));
-	printf("%s>>>>>FT_STRDUP<<<<<%s\n", _RED_, _DEF_);
-	printf("ftstrdup %s\n", ft_strdup(""));
-	printf("__strdup %s\n", strdup(""));
-	printf("ftstrdup %s\n", ft_strdup("don't yell on me"));
-	printf("__strdup %s\n", strdup("don't yell on me"));
-	printf("ftstrdup %s\n", ft_strdup(NULL));
-	// printf("__strdup %s\n", strdup(NULL));
-	printf("%s>>>>>FT_WRITE<<<<<%s\n", _RED_, _DEF_);
-	char *s3 = "a string\n";
-	ft_write(1, s3, ft_strlen(s3));
-	write(1, s3, strlen(s3));
-	char *s4 = NULL;
-	char *s5 = NULL;
-	int i;
-	int j = 0;
-	// ft_write(1, s4, ft_strlen(s4));
-	// write(1, s4, strlen(s4));
+	int fd = open("file.txt", O_RDWR | O_APPEND);
+	ft_write(fd, "LIBASM ft_write\n", ft_strlen("LIBASM ft_write\n"));
+	write(fd, "STANDART write\n", strlen("STANDART write\n"));
+	
+	printf("%s----OPEN FD----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, "check file.txt");
+	printf("%sSTANDART %s%s\n\n", _YEL_, _DEF_, "check file.txt");
+	close(fd);
+	
+	printf("%s----WRONG FD----%s\n", _BLU_, _DEF_);
+	ft_write(fd, "LIBASM ft_write\n", ft_strlen("LIBASM ft_write\n"));
+	printf("%sLIBASM   %serrno %d\n", _GRN_, _DEF_, errno);
+	write(fd, "STANDART write\n", strlen("STANDART write\n"));
+	printf("%sSTANDART %serrno %d\n\n", _YEL_, _DEF_, errno);
+	errno = 0;
+
+	int i; int j;
+	char *s4 = calloc(1, 20); char *s5 = calloc(1, 20);
+	//FT_READ
 	printf("%s>>>>>FT_READ<<<<<%s\n", _RED_, _DEF_);
-	i = ft_read(3, s4, 0);
-	printf("errno %d\n", errno);
-	j = read(3, s5, 0);
-	printf("errno %d\n", errno);
-	printf("__i__j__ %d, %d\n", i, j);
-	i = ft_write(1, NULL, ft_strlen(s4));
-	printf("errno %d\n", errno);
-	j = write(1, NULL, ft_strlen(s5));
-	printf("errno %d\n", errno);
-	printf("__i__j__ %d, %d\n", i, j);
+	
+	printf("%s-----STDIN-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM  %s ", _GRN_, _DEF_);
+	i = ft_read(0, s4, 20);
+	printf("read %d: string: %s", i, s4);
+	printf("%sLIBASM   %serrno %d\n", _GRN_, _DEF_, errno);
+	printf("%sSTANDART %s", _YEL_, _DEF_);
+	j = read(0, s5, 20);
+	printf("read %d: string: %s", j, s5);
+	printf("%sSTANDART %serrno %d\n\n", _YEL_, _DEF_, errno);
+	
+	free(s4); free(s5);
+	s4 = calloc(1, 20); s5 = calloc(1, 20);
+	
+	fd = open("file.txt", O_RDONLY);
+	printf("%s----READ FD----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s ", _GRN_, _DEF_);
+	i = ft_read(fd, s4, 20);
+	printf("string: %s, errno: %d\n", s4, errno);
+	printf("%sSTANDART %s ", _YEL_, _DEF_);
+	j = read(fd, s5, 20);
+	printf("string: %s, errno: %d\n\n", s5, errno);
+	close(fd);
+	
+	free(s4); free(s5);
+	s4 = calloc(1, 20); s5 = calloc(1, 20);
+
+	printf("%s----WRONG FD----%s\n", _BLU_, _DEF_);
+	ft_read(fd, s4, 20);
+	printf("%sLIBASM   %serrno %d\n", _GRN_, _DEF_, errno);
+	read(fd, s5, 20);
+	printf("%sSTANDART %serrno %d\n\n", _YEL_, _DEF_, errno);
+
+	//FT_STRDUP
+	printf("%s>>>>>FT_STRDUP<<<<<%s\n", _RED_, _DEF_);
+	printf("%s-----empty-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, ft_strdup(""));
+	printf("%sSTANDART %s%s\n\n", _YEL_, _DEF_, strdup(""));
+	printf("%s-----long string-----%s\n", _BLU_, _DEF_);
+	printf("%sLIBASM   %s%s\n", _GRN_, _DEF_, ft_strdup("This is a veeeery loooooong string I duplicaaaaaaaaaaaaate"));
+	printf("%sSTANDART %s%s\n", _YEL_, _DEF_, strdup("This is a veeeery loooooong string I duplicaaaaaaaaaaaaate"));
+
 }

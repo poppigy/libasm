@@ -34,7 +34,7 @@ _compare:
 	mov	r9b, byte[rdi + rax]
 	sub r9, r8
 	cmp	r9, 0
-	jne	_return
+	jnz	_return
 	inc rax
 	jmp _while
 _end_compare:
@@ -43,8 +43,8 @@ _end_compare:
 	mov	r8b, byte[rsi + rax]
 	mov	r9b, byte[rdi + rax]
 	sub r9, r8
-	xor	rax, rax
-	mov	rax, r9
 	jmp	_return
 _return:
+	xor	rax, rax
+	mov	rax, r9
 	ret

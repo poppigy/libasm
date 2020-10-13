@@ -15,10 +15,6 @@
 		section .text
 _ft_strcpy:
 		xor	rax, rax
-		; test rdi, rdi
-		; ret
-		; test rsi, rsi
-		; ret
 _while:
 		cmp	byte[rsi + rax], 0
 		je	_return
