@@ -12,6 +12,10 @@ across multiple architectures but require interpreting or compiling. Assembly la
 may also be called symbolic machine code.</li>
 
 <p>In order to run this project om MacOS you need to have NASM installed.</p>
+
+<div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0066BB; font-weight: bold">brew install nasm</span>
+</pre></div> 
+
 To compile the project use Makefile
 <div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%"><span style="color: #0066BB; font-weight: bold">make</span>
 </pre></div> 
